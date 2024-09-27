@@ -108,7 +108,7 @@ Neo.init2 = function () {
   Neo.animation = Neo.config.thumbnail_type == "animation";
 
   // 続きから描く
-  Neo.storage = Neo.isMobile() ? localStorage : sessionStorage;
+  Neo.storage = localStorage;
 
   var filename = Neo.getFilename();
   var message =
