@@ -1130,7 +1130,6 @@ Neo.getAbsoluteURL = function (board, url) {
 };
 
 Neo.submit = function (board, blob, thumbnail, thumbnail2) {
-
   var url = Neo.getAbsoluteURL(board, Neo.config.url_save);
   var headerString = Neo.str_header || "";
 
