@@ -1333,11 +1333,9 @@ Neo.submit = function (board, blob, thumbnail, thumbnail2) {
     }
   }
 
-  if (Neo.config.neo_send_with_formdata == "true") {
-    postData(url, formData);
-  } else {
-    postData(url, body);
-  }
+  // データ送信処理
+  const data = Neo.config.neo_send_with_formdata === "true" ? formData : body;
+  postData(url, data);
 };
 
 /*
