@@ -439,12 +439,12 @@ Neo.ToolTip.prototype.draw = function (c) {
       this.prevMode = this.mode;
 
       var img = new Image();
-      img.src = this.toolIcons[this.mode];
       img.onload = function () {
         var ref = this;
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawTintImage(ctx, img, c, 0, 0);
       }.bind(this);
+      img.src = this.toolIcons[this.mode];
     } else {
       Neo.tintImage(ctx, c);
     }
@@ -687,10 +687,10 @@ Neo.EraserTip.prototype.draw = function () {
   ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   var img = new Image();
 
-  img.src = Neo.ToolTip.eraser;
   img.onload = function () {
     ctx.drawImage(img, 0, 0);
   };
+  img.src = Neo.ToolTip.eraser;
 };
 
 /*
@@ -1407,13 +1407,13 @@ Neo.ViewerButton.prototype.init = function (name, params) {
     });
 
     var img = new Image();
-    img.src = Neo.ViewerButton[name.toLowerCase().replace(/viewer/, "")];
     img.onload = function () {
       var ref = this;
       ctx.clearRect(0, 0, 24, 24);
       ctx.drawImage(img, 0, 0);
       Neo.tintImage(ctx, Neo.config.color_text);
     }.bind(this);
+    img.src = Neo.ViewerButton[name.toLowerCase().replace(/viewer/, "")];
   } else {
     this.element.innerHTML = "<div></div><canvas width=24 height=24></canvas>";
     this.update();

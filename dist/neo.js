@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 var Neo = function () {};
 
-Neo.version = "1.6.10";
+Neo.version = "1.6.11";
 Neo.painter;
 Neo.fullScreen = false;
 Neo.uploaded = false;
@@ -4420,12 +4420,12 @@ Neo.Painter.prototype.cancelTool = function (e) {
 Neo.Painter.prototype.loadImage = function (filename) {
   console.log("loadImage " + filename);
   var img = new Image();
-  img.src = filename;
   img.onload = function () {
     var oe = Neo.painter;
     oe.canvasCtx[0].drawImage(img, 0, 0);
     oe.updateDestCanvas(0, 0, oe.canvasWidth, oe.canvasHeight);
   };
+  img.src = filename;
 };
 
 Neo.Painter.prototype.loadAnimation = function (filename) {
@@ -4445,10 +4445,8 @@ Neo.Painter.prototype.loadAnimation = function (filename) {
 Neo.Painter.prototype.loadSession = function (callback) {
   if (Neo.storage) {
     var img0 = new Image();
-    img0.src = Neo.storage.getItem("layer0");
     img0.onload = function () {
       var img1 = new Image();
-      img1.src = Neo.storage.getItem("layer1");
       img1.onload = function () {
         var oe = Neo.painter;
         oe.canvasCtx[0].clearRect(0, 0, oe.canvasWidth, oe.canvasHeight);
@@ -4456,10 +4454,12 @@ Neo.Painter.prototype.loadSession = function (callback) {
         oe.canvasCtx[0].drawImage(img0, 0, 0);
         oe.canvasCtx[1].drawImage(img1, 0, 0);
         oe.updateDestCanvas(0, 0, oe.canvasWidth, oe.canvasHeight);
-
+        
         if (callback) callback();
       };
+      img1.src = Neo.storage.getItem("layer1");
     };
+    img0.src = Neo.storage.getItem("layer0");
   }
 };
 
@@ -6857,20 +6857,20 @@ Neo.ActionManager.prototype.restore = function () {
     var callback = arguments[1];
 
     var img0 = new Image();
-    img0.src = item[1];
     img0.onload = function () {
       var img1 = new Image();
-      img1.src = item[2];
       img1.onload = function () {
         oe.canvasCtx[0].clearRect(0, 0, width, height);
         oe.canvasCtx[1].clearRect(0, 0, width, height);
         oe.canvasCtx[0].drawImage(img0, 0, 0);
         oe.canvasCtx[1].drawImage(img1, 0, 0);
         oe.updateDestCanvas(0, 0, width, height);
-
+        
         if (callback && typeof callback == "function") callback(true);
       };
+      img1.src = item[2];
     };
+    img0.src = item[1];
   }
 };
 
@@ -7671,12 +7671,12 @@ Neo.ToolTip.prototype.draw = function (c) {
       this.prevMode = this.mode;
 
       var img = new Image();
-      img.src = this.toolIcons[this.mode];
       img.onload = function () {
         var ref = this;
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawTintImage(ctx, img, c, 0, 0);
       }.bind(this);
+      img.src = this.toolIcons[this.mode];
     } else {
       Neo.tintImage(ctx, c);
     }
@@ -7919,10 +7919,10 @@ Neo.EraserTip.prototype.draw = function () {
   ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   var img = new Image();
 
-  img.src = Neo.ToolTip.eraser;
   img.onload = function () {
     ctx.drawImage(img, 0, 0);
   };
+  img.src = Neo.ToolTip.eraser;
 };
 
 /*
@@ -8639,13 +8639,13 @@ Neo.ViewerButton.prototype.init = function (name, params) {
     });
 
     var img = new Image();
-    img.src = Neo.ViewerButton[name.toLowerCase().replace(/viewer/, "")];
     img.onload = function () {
       var ref = this;
       ctx.clearRect(0, 0, 24, 24);
       ctx.drawImage(img, 0, 0);
       Neo.tintImage(ctx, Neo.config.color_text);
     }.bind(this);
+    img.src = Neo.ViewerButton[name.toLowerCase().replace(/viewer/, "")];
   } else {
     this.element.innerHTML = "<div></div><canvas width=24 height=24></canvas>";
     this.update();
