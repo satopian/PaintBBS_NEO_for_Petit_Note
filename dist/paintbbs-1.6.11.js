@@ -4432,7 +4432,7 @@ Neo.Painter.prototype.loadAnimation = function (filename) {
   console.log("loadAnimation " + filename);
 
   Neo.painter.busy = true;
-
+  //続きを描く画面で動画をスキップする時はbusySkippedをtrueにする
   Neo.painter.busySkipped = Neo.config.neo_animation_skip == "true";
 
   Neo.getPCH(filename, function (pch) {
