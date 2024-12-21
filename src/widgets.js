@@ -47,14 +47,14 @@ Neo.Button.prototype.init = function (name, params) {
       ref._mouseDownHandler(e);
       e.preventDefault();
     },
-    { passive: false, capture: true }
+    { passive: false, capture: true },
   );
   this.element.addEventListener(
     "touchend",
     function (e) {
       ref._mouseUpHandler(e);
     },
-    { passive: false, capture: true }
+    { passive: false, capture: true },
   );
 
   this.element.className = !this.params.type == "fill" ? "button" : "buttonOff";
@@ -213,14 +213,14 @@ Neo.ColorTip.prototype.init = function (name, params) {
       ref._mouseDownHandler(e);
       e.preventDefault();
     },
-    { passive: false, capture: true }
+    { passive: false, capture: true },
   );
   this.element.addEventListener(
     "touchend",
     function (e) {
       ref._mouseUpHandler(e);
     },
-    true
+    true,
   );
 
   this.element.className = "colorTipOff";
@@ -348,14 +348,14 @@ Neo.ToolTip.prototype.init = function (name, params) {
       ref._mouseDownHandler(e);
       e.preventDefault();
     },
-    { passive: false, capture: true }
+    { passive: false, capture: true },
   );
   this.element.addEventListener(
     "touchend",
     function (e) {
       ref._mouseUpHandler(e);
     },
-    true
+    true,
   );
 
   this.selected = this.params.type == "pen" ? true : false;
@@ -1208,7 +1208,7 @@ Neo.LayerControl.prototype.init = function (name, params) {
       ref._mouseDownHandler(e);
       e.preventDefault();
     },
-    { passive: false, capture: true }
+    { passive: false, capture: true },
   );
 
   this.element.className = "layerControl";
@@ -1248,7 +1248,7 @@ Neo.LayerControl.prototype._mouseDownHandler = function (e) {
     0,
     0,
     Neo.painter.canvasWidth,
-    Neo.painter.canvasHeight
+    Neo.painter.canvasHeight,
   );
   if (Neo.painter.tool.type == Neo.Painter.TOOLTYPE_PASTE) {
     Neo.painter.tool.drawCursor(Neo.painter);
@@ -1289,7 +1289,7 @@ Neo.ReserveControl.prototype.init = function (name, params) {
       ref._mouseDownHandler(e);
       e.preventDefault();
     },
-    { passive: false, capture: true }
+    { passive: false, capture: true },
   );
 
   this.element.className = "reserve";
@@ -1493,7 +1493,7 @@ Neo.ViewerBar.prototype.init = function (name, params) {
       ref._touchHandler(e);
       e.preventDefault();
     },
-    { passive: false, capture: true }
+    { passive: false, capture: true },
   );
 
   this.update();
