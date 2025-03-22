@@ -1261,15 +1261,6 @@ Neo.submit = function (board, blob, thumbnail, thumbnail2) {
               Neo.submitButton.enable();
               return alert(text.replace(/^error\n/m, ""));
             }
-            if (text !== "ok") {
-              Neo.submitButton.enable();
-              return alert(
-                errorMessage +
-                  Neo.translate(
-                    "投稿に失敗。時間を置いて再度投稿してみてください。"
-                  )
-              );
-            }
             var exitURL = Neo.getAbsoluteURL(board, Neo.config.url_exit);
             var responseURL = text.replace(/&amp;/g, "&");
 
@@ -1333,9 +1324,11 @@ Neo.submit = function (board, blob, thumbnail, thumbnail2) {
     }
   }
 
-  // データ送信処理
-  const data = Neo.config.neo_send_with_formdata === "true" ? formData : body;
-  postData(url, data);
+  if (Neo.config.neo_send_with_formdata == "true") {
+    postData(url, formData);
+  } else {
+    postData(url, body);
+  }
 };
 
 /*
@@ -4939,7 +4932,7 @@ Neo.DrawToolBase.prototype.freeHandUpMoveHandler = function (oe) {
 };
 
 Neo.DrawToolBase.prototype.drawCursor = function (oe) {
-  //   if (oe.lineWidth <= 8) return;
+  // if (oe.lineWidth <= 8) return;
   var mx = oe.mouseX;
   var my = oe.mouseY;
   var d = oe.lineWidth;

@@ -108,7 +108,8 @@ Neo.init2 = function () {
   Neo.animation = Neo.config.thumbnail_type == "animation";
 
   // 続きから描く
-  Neo.storage = localStorage;
+
+  Neo.storage = localStorage; //PCの時にもlocalStorageを使用
 
   var filename = Neo.getFilename();
   var message =
@@ -1242,15 +1243,6 @@ Neo.submit = function (board, blob, thumbnail, thumbnail2) {
               Neo.submitButton.enable();
               return alert(text.replace(/^error\n/m, ""));
             }
-            if (text !== "ok") {
-              Neo.submitButton.enable();
-              return alert(
-                errorMessage +
-                  Neo.translate(
-                    "投稿に失敗。時間を置いて再度投稿してみてください。"
-                  )
-              );
-            }
             var exitURL = Neo.getAbsoluteURL(board, Neo.config.url_exit);
             var responseURL = text.replace(/&amp;/g, "&");
 
@@ -2289,6 +2281,10 @@ Neo.Painter.prototype._mouseDownHandler = function (e) {
   this.prevMouseX = this.mouseX;
   this.prevMouseY = this.mouseY;
   this.securityCount++;
+  let autosaveCount = this.securityCount;
+  if (autosaveCount % 10 === 0 && Neo.painter.isDirty()) {
+    Neo.painter.saveSession(); //10ストロークごとに自動バックアップ
+  }
 
   if (this.isMouseDownRight) {
     this.isMouseDownRight = false;
@@ -4919,11 +4915,10 @@ Neo.DrawToolBase.prototype.freeHandUpMoveHandler = function (oe) {
 };
 
 Neo.DrawToolBase.prototype.drawCursor = function (oe) {
-  //   if (oe.lineWidth <= 8) return;
+  if (oe.lineWidth <= 8) return;
   var mx = oe.mouseX;
   var my = oe.mouseY;
   var d = oe.lineWidth;
-  d = d == 1 ? 2 : d; //1pxの時は2px相当の円カーソルを表示
 
   var x = (mx - oe.zoomX + (oe.destCanvas.width * 0.5) / oe.zoom) * oe.zoom;
   var y = (my - oe.zoomY + (oe.destCanvas.height * 0.5) / oe.zoom) * oe.zoom;

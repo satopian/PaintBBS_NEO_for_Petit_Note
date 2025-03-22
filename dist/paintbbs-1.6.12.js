@@ -1330,15 +1330,6 @@ Neo.submit = function (board, blob, thumbnail, thumbnail2) {
               Neo.submitButton.enable();
               return alert(text.replace(/^error\n/m, ""));
             }
-            if (text !== "ok") {
-              Neo.submitButton.enable();
-              return alert(
-                errorMessage +
-                  Neo.translate(
-                    "投稿に失敗。時間を置いて再度投稿してみてください。",
-                  ),
-              );
-            }
             var exitURL = Neo.getAbsoluteURL(board, Neo.config.url_exit);
             var responseURL = text.replace(/&amp;/g, "&");
 
@@ -5017,7 +5008,7 @@ Neo.DrawToolBase.prototype.freeHandUpMoveHandler = function (oe) {
 };
 
 Neo.DrawToolBase.prototype.drawCursor = function (oe) {
-  //   if (oe.lineWidth <= 8) return;
+  // if (oe.lineWidth <= 8) return;
   var mx = oe.mouseX;
   var my = oe.mouseY;
   var d = oe.lineWidth;
@@ -8997,7 +8988,7 @@ var LZString = (function () {
           if (
             Object.prototype.hasOwnProperty.call(
               context_dictionaryToCreate,
-              context_w,
+              context_w
             )
           ) {
             if (context_w.charCodeAt(0) < 256) {
@@ -9085,7 +9076,7 @@ var LZString = (function () {
         if (
           Object.prototype.hasOwnProperty.call(
             context_dictionaryToCreate,
-            context_w,
+            context_w
           )
         ) {
           if (context_w.charCodeAt(0) < 256) {
